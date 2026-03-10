@@ -43,6 +43,7 @@ Confirm.Size = UDim2.new(0,120,0,40)
 Confirm.Position = UDim2.new(0.6,0,0.35,0)
 
 local boxes = {}
+
 for i = 1,5 do
     local box = Instance.new("TextBox")
     box.Parent = Inner
@@ -72,6 +73,11 @@ Confirm.MouseButton1Click:Connect(function()
 
     if key == "60132" or key == "90718" then
         Status.Text = "Access granted!"
+
+        wait(1)
+
+        ScreenGui:Destroy()
+
     else
         Status.Text = "Wrong key!"
     end
@@ -80,12 +86,16 @@ end)
 -- rainbow border
 spawn(function()
     local hue = 0
+
     while true do
         hue = hue + 0.01
+
         if hue > 1 then
             hue = 0
         end
+
         Outer.BackgroundColor3 = Color3.fromHSV(hue,1,1)
+
         wait(0.05)
     end
 end)
