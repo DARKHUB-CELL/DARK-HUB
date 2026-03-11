@@ -237,18 +237,21 @@ Confirm.MouseButton1Click:Connect(function()
             "E5N8W","S2R6K","F9P4C","Y3T7H","L8D2Z"
             }
 
+            local captcha
+
             local function newCaptcha()
                 captcha = captchaList[math.random(1,#captchaList)]
                 CaptchaLabel.Text = captcha
                 CaptchaLabel.Rotation = math.random(-20,20)
             end
 
-            local captcha
             newCaptcha()
 
             ConfirmCaptcha.MouseButton1Click:Connect(function()
 
-                if Input.Text == captcha then
+                local text = string.upper(Input.Text:gsub("%s",""))
+
+                if text == captcha then
 
                     CaptchaGui:Destroy()
 
