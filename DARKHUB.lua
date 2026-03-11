@@ -257,43 +257,136 @@ Confirm.MouseButton1Click:Connect(function()
 
                     ---------------- MENU ----------------
 
-                    local Menu = Instance.new("TextLabel")
-                    Menu.Parent = game.CoreGui
-                    Menu.Size = UDim2.new(1,0,1,0)
-                    Menu.TextScaled = true
-                    Menu.BackgroundTransparency = 1
-                    Menu.Text = "🔴 WELCOME TO RED HUB"
+local MenuGui = Instance.new("ScreenGui")
+MenuGui.Parent = game.CoreGui
 
-                else
+local Border = Instance.new("Frame")
+Border.Parent = MenuGui
+Border.Size = UDim2.new(0,520,0,320)
+Border.Position = UDim2.new(0.5,-260,0.5,-160)
+Border.BorderSizePixel = 0
 
-                    Input.Text = ""
-                    newCaptcha()
+local Main = Instance.new("Frame")
+Main.Parent = Border
+Main.Size = UDim2.new(1,-6,1,-6)
+Main.Position = UDim2.new(0,3,0,3)
+Main.BackgroundColor3 = Color3.fromRGB(255,255,255)
 
-                end
+-- TOP BAR
 
-            end)
+local TopBar = Instance.new("Frame")
+TopBar.Parent = Main
+TopBar.Size = UDim2.new(1,0,0,35)
+TopBar.BackgroundColor3 = Color3.fromRGB(40,40,40)
 
-            ResetCaptcha.MouseButton1Click:Connect(function()
+local Title = Instance.new("TextLabel")
+Title.Parent = TopBar
+Title.Size = UDim2.new(1,0,1,0)
+Title.BackgroundTransparency = 1
+Title.Text = "RedHub 1.1 beta"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextScaled = true
 
-                Input.Text = ""
-                newCaptcha()
+-- TAB
 
-            end)
+local Tab = Instance.new("Frame")
+Tab.Parent = Main
+Tab.Size = UDim2.new(0,150,1,-35)
+Tab.Position = UDim2.new(0,0,0,35)
+Tab.BackgroundColor3 = Color3.fromRGB(0,170,255)
 
-        end)
+-- CONTENT
 
-    else
-        Status.Text = "❌ Wrong key!"
+local Content = Instance.new("Frame")
+Content.Parent = Main
+Content.Size = UDim2.new(1,-150,1,-35)
+Content.Position = UDim2.new(0,150,0,35)
+Content.BackgroundColor3 = Color3.fromRGB(0,170,255)
+
+-- FADE EFFECT
+
+Main.BackgroundTransparency = 1
+for _,v in pairs(Main:GetDescendants()) do
+    if v:IsA("Frame") or v:IsA("TextLabel") then
+        v.BackgroundTransparency = 1
+    end
+end
+
+for i=1,10 do
+    Main.BackgroundTransparency = Main.BackgroundTransparency - 0.1
+    task.wait(0.03)
+end
+
+-- RGB BORDER
+
+spawn(function()
+
+    local hue = 0
+
+    while true do
+        hue = hue + 0.01
+        if hue > 1 then
+            hue = 0
+        end
+
+        Border.BackgroundColor3 = Color3.fromHSV(hue,1,1)
+
+        task.wait(0.03)
     end
 
 end)
 
-spawn(function()
-    local hue = 0
-    while true do
-        hue = hue + 0.01
-        if hue > 1 then hue = 0 end
-        Outer.BackgroundColor3 = Color3.fromHSV(hue,1,1)
-        task.wait(0.05)
+-- DRAG MENU
+
+local UIS = game:GetService("UserInputService")
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+TopBar.InputBegan:Connect(function(input)
+
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+        dragging = true
+        dragStart = input.Position
+        startPos = Border.Position
+
+        input.Changed:Connect(function()
+
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+
+        end)
+
     end
+
+end)
+
+TopBar.InputChanged:Connect(function(input)
+
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+
+end)
+
+UIS.InputChanged:Connect(function(input)
+
+    if input == dragInput and dragging then
+
+        local delta = input.Position - dragStart
+
+        Border.Position =
+            UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+
+    end
+
 end)
