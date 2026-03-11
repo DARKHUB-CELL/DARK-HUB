@@ -73,56 +73,43 @@ Confirm.MouseButton1Click:Connect(function()
 
     if key == "60132" or key == "90718" then
         Status.Text = "Access granted!"
-
         wait(1)
 
         ScreenGui:Destroy()
 
         -- LOADING GUI
         local LoadGui = Instance.new("ScreenGui")
-        local LoadOuter = Instance.new("Frame")
-        local LoadInner = Instance.new("Frame")
+        local Border1 = Instance.new("Frame")
+        local Border2 = Instance.new("Frame")
+        local Inside = Instance.new("Frame")
 
         LoadGui.Parent = game.CoreGui
 
-        LoadOuter.Parent = LoadGui
-        LoadOuter.Size = UDim2.new(0,420,0,250)
-        LoadOuter.Position = UDim2.new(0.5,-210,0.5,-125)
-        LoadOuter.BorderSizePixel = 0
+        Border1.Parent = LoadGui
+        Border1.Size = UDim2.new(0,420,0,250)
+        Border1.Position = UDim2.new(0.5,-210,0.5,-125)
+        Border1.BorderSizePixel = 0
 
-        LoadInner.Parent = LoadOuter
-        LoadInner.Size = UDim2.new(1,-10,1,-10)
-        LoadInner.Position = UDim2.new(0,5,0,5)
-        LoadInner.BorderSizePixel = 0
+        Border2.Parent = Border1
+        Border2.Size = UDim2.new(1,-6,1,-6)
+        Border2.Position = UDim2.new(0,3,0,3)
+        Border2.BackgroundColor3 = Color3.fromRGB(0,170,255)
+        Border2.BorderSizePixel = 0
 
-        -- khung ngoài 7 màu
+        Inside.Parent = Border2
+        Inside.Size = UDim2.new(1,-6,1,-6)
+        Inside.Position = UDim2.new(0,3,0,3)
+        Inside.BackgroundColor3 = Color3.fromRGB(255,255,255)
+        Inside.BorderSizePixel = 0
+
+        -- viền ngoài 7 màu
         spawn(function()
             local hue = 0
             while true do
                 hue = hue + 0.01
                 if hue > 1 then hue = 0 end
-                LoadOuter.BackgroundColor3 = Color3.fromHSV(hue,1,1)
+                Border1.BackgroundColor3 = Color3.fromHSV(hue,1,1)
                 wait(0.05)
-            end
-        end)
-
-        -- khung trong 3 màu
-        spawn(function()
-            local colors = {
-                Color3.fromRGB(255,0,0),
-                Color3.fromRGB(0,255,0),
-                Color3.fromRGB(0,0,255)
-            }
-
-            local i = 1
-
-            while true do
-                LoadInner.BackgroundColor3 = colors[i]
-                i = i + 1
-                if i > #colors then
-                    i = 1
-                end
-                wait(0.5)
             end
         end)
 
@@ -134,16 +121,12 @@ end)
 -- rainbow border
 spawn(function()
     local hue = 0
-
     while true do
         hue = hue + 0.01
-
         if hue > 1 then
             hue = 0
         end
-
         Outer.BackgroundColor3 = Color3.fromHSV(hue,1,1)
-
         wait(0.05)
     end
 end)
