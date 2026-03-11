@@ -163,30 +163,119 @@ Confirm.MouseButton1Click:Connect(function()
         spawn(function()
 
             for i = 0,100 do
-
                 Percent.Text = i.."%"
                 Bar.Size = UDim2.new(i/100,0,1,0)
                 LoadText.Text = messages[math.random(1,#messages)]
-
                 task.wait(0.07)
-
             end
 
             LoadText.Text = "✅ Loaded Successfully!"
-
             task.wait(1)
 
             Music:Stop()
             LoadGui:Destroy()
 
-            ---------------- MENU ----------------
+            ---------------- CAPTCHA ----------------
 
-            local Menu = Instance.new("TextLabel")
-            Menu.Parent = game.CoreGui
-            Menu.Size = UDim2.new(1,0,1,0)
-            Menu.TextScaled = true
-            Menu.BackgroundTransparency = 1
-            Menu.Text = "🔴 WELCOME TO RED HUB"
+            local CaptchaGui = Instance.new("ScreenGui")
+            CaptchaGui.Parent = game.CoreGui
+
+            local Frame = Instance.new("Frame")
+            Frame.Parent = CaptchaGui
+            Frame.Size = UDim2.new(0,400,0,220)
+            Frame.Position = UDim2.new(0.5,-200,0.5,-110)
+            Frame.BackgroundColor3 = Color3.fromRGB(255,255,255)
+
+            local Title = Instance.new("TextLabel")
+            Title.Parent = Frame
+            Title.Size = UDim2.new(1,0,0,40)
+            Title.TextScaled = true
+            Title.BackgroundTransparency = 1
+            Title.Text = "🔒 SECURITY CHECK"
+
+            local Info = Instance.new("TextLabel")
+            Info.Parent = Frame
+            Info.Size = UDim2.new(1,0,0,30)
+            Info.Position = UDim2.new(0,0,0.2,0)
+            Info.BackgroundTransparency = 1
+            Info.TextScaled = true
+            Info.Text = "Type the captcha to continue"
+
+            local CaptchaLabel = Instance.new("TextLabel")
+            CaptchaLabel.Parent = Frame
+            CaptchaLabel.Size = UDim2.new(1,0,0,40)
+            CaptchaLabel.Position = UDim2.new(0,0,0.4,0)
+            CaptchaLabel.BackgroundTransparency = 1
+            CaptchaLabel.TextScaled = true
+
+            local Input = Instance.new("TextBox")
+            Input.Parent = Frame
+            Input.Size = UDim2.new(0.6,0,0,35)
+            Input.Position = UDim2.new(0.2,0,0.6,0)
+            Input.Text = ""
+            Input.TextScaled = true
+            Input.BackgroundColor3 = Color3.fromRGB(240,240,240)
+
+            local ConfirmCaptcha = Instance.new("TextButton")
+            ConfirmCaptcha.Parent = Frame
+            ConfirmCaptcha.Size = UDim2.new(0.25,0,0,35)
+            ConfirmCaptcha.Position = UDim2.new(0.15,0,0.8,0)
+            ConfirmCaptcha.Text = "Confirm"
+
+            local ResetCaptcha = Instance.new("TextButton")
+            ResetCaptcha.Parent = Frame
+            ResetCaptcha.Size = UDim2.new(0.25,0,0,35)
+            ResetCaptcha.Position = UDim2.new(0.6,0,0.8,0)
+            ResetCaptcha.Text = "Reset"
+
+            local captchaList = {
+            "K7P2X","9QW4M","Z8T5L","P3X9K","R6N2V",
+            "5H8YT","L2W9C","X7D4B","T9P6Q","8K2ZR",
+            "Q5N8T","A7P3L","M2X9W","C6R4Z","T8B2K",
+            "J4Y9H","D7F3Q","U5L8P","N2X6C","W9K4T",
+            "G3Z7R","H8P5D","K6M2Y","V4T9Q","B7X3L",
+            "E5N8W","S2R6K","F9P4C","Y3T7H","L8D2Z"
+            }
+
+            local function newCaptcha()
+                captcha = captchaList[math.random(1,#captchaList)]
+                CaptchaLabel.Text = captcha
+                CaptchaLabel.Rotation = math.random(-20,20)
+            end
+
+            local captcha
+            newCaptcha()
+
+            ConfirmCaptcha.MouseButton1Click:Connect(function()
+
+                if Input.Text == captcha then
+
+                    CaptchaGui:Destroy()
+
+                    ---------------- MENU ----------------
+
+                    local Menu = Instance.new("TextLabel")
+                    Menu.Parent = game.CoreGui
+                    Menu.Size = UDim2.new(1,0,1,0)
+                    Menu.TextScaled = true
+                    Menu.BackgroundTransparency = 1
+                    Menu.Text = "🔴 WELCOME TO RED HUB"
+
+                else
+
+                    Input.Text = ""
+                    newCaptcha()
+
+                end
+
+            end)
+
+            ResetCaptcha.MouseButton1Click:Connect(function()
+
+                Input.Text = ""
+                newCaptcha()
+
+            end)
 
         end)
 
