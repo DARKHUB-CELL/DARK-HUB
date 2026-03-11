@@ -99,3 +99,35 @@ spawn(function()
         wait(0.05)
     end
 end)
+
+function startLoading()
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.CoreGui
+
+local Frame = Instance.new("Frame")
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0,420,0,250)
+Frame.Position = UDim2.new(0.5,-210,0.5,-125)
+
+local Text = Instance.new("TextLabel")
+Text.Parent = Frame
+Text.Size = UDim2.new(1,0,1,0)
+Text.TextScaled = true
+Text.BackgroundTransparency = 1
+
+for i = 1,100 do
+
+    Text.Text = "Loading "..i.."%"
+
+    wait(0.03)
+
+end
+
+wait(1)
+
+ScreenGui:Destroy()
+
+print("Menu hub mở")
+
+end
