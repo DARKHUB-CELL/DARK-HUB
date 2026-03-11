@@ -1,4 +1,3 @@
--- PASSWORD GUI
 local ScreenGui = Instance.new("ScreenGui")
 local Outer = Instance.new("Frame")
 local Inner = Instance.new("Frame")
@@ -58,7 +57,7 @@ end
 
 local function getKey()
     local key = ""
-    for i,v in ipairs(boxes) do
+    for i,v in pairs(boxes) do
         key = key..v.Text
     end
     return key
@@ -70,9 +69,11 @@ GetKey.MouseButton1Click:Connect(function()
 end)
 
 Confirm.MouseButton1Click:Connect(function()
+
     local key = getKey()
 
     if key == "60132" or key == "90718" then
+
         Status.Text = "Access granted!"
         wait(1)
 
@@ -83,6 +84,10 @@ Confirm.MouseButton1Click:Connect(function()
         local Border1 = Instance.new("Frame")
         local Border2 = Instance.new("Frame")
         local Inside = Instance.new("Frame")
+        local LoadText = Instance.new("TextLabel")
+        local Percent = Instance.new("TextLabel")
+        local BarBack = Instance.new("Frame")
+        local Bar = Instance.new("Frame")
 
         LoadGui.Parent = game.CoreGui
 
@@ -103,55 +108,68 @@ Confirm.MouseButton1Click:Connect(function()
         Inside.BackgroundColor3 = Color3.fromRGB(255,255,255)
         Inside.BorderSizePixel = 0
 
-        -- TEXT
-        local LoadText = Instance.new("TextLabel")
         LoadText.Parent = Inside
-        LoadText.Size = UDim2.new(1,0,0.4,0)
+        LoadText.Size = UDim2.new(1,0,0,40)
         LoadText.Position = UDim2.new(0,0,0.2,0)
         LoadText.BackgroundTransparency = 1
         LoadText.TextScaled = true
         LoadText.TextColor3 = Color3.new(0,0,0)
         LoadText.Text = "Initializing..."
 
-        -- LOADING BAR
-        local BarBG = Instance.new("Frame")
-        BarBG.Parent = Inside
-        BarBG.Size = UDim2.new(0.8,0,0,20)
-        BarBG.Position = UDim2.new(0.1,0,0.75,0)
-        BarBG.BackgroundColor3 = Color3.fromRGB(200,200,200)
-        BarBG.BorderSizePixel = 0
+        Percent.Parent = Inside
+        Percent.Size = UDim2.new(1,0,0,30)
+        Percent.Position = UDim2.new(0,0,0.4,0)
+        Percent.BackgroundTransparency = 1
+        Percent.TextScaled = true
+        Percent.TextColor3 = Color3.new(0,0,0)
+        Percent.Text = "0%"
 
-        local Bar = Instance.new("Frame")
-        Bar.Parent = BarBG
+        BarBack.Parent = Inside
+        BarBack.Size = UDim2.new(0.8,0,0,20)
+        BarBack.Position = UDim2.new(0.1,0,0.55,0)
+        BarBack.BackgroundColor3 = Color3.fromRGB(200,200,200)
+
+        Bar.Parent = BarBack
         Bar.Size = UDim2.new(0,0,1,0)
-        Bar.BackgroundColor3 = Color3.fromRGB(255,0,0)
-        Bar.BorderSizePixel = 0
+        Bar.BackgroundColor3 = Color3.fromRGB(0,170,255)
+
+        -- MUSIC
+        local Music = Instance.new("Sound")
+        Music.Parent = Inside
+        Music.SoundId = "rbxassetid://142376088"
+        Music.Volume = 2
+        Music:Play()
 
         local messages = {
         "Initializing system...",
         "Loading assets...",
         "Checking scripts...",
-        "Connecting modules...",
         "Preparing interface...",
-        "Loading UI elements...",
-        "Checking security...",
+        "Loading modules...",
+        "Optimizing performance...",
         "Syncing data...",
-        "Loading functions...",
         "Preparing features...",
         "Finalizing setup...",
         "Starting RED HUB..."
         }
 
         spawn(function()
-            for i = 1,100 do
+
+            for i = 0,100 do
+
+                Percent.Text = i.."%"
                 Bar.Size = UDim2.new(i/100,0,1,0)
+
                 LoadText.Text = messages[math.random(1,#messages)]
-                wait(0.08)
+
+                wait(0.9) -- ~90 giây
+
             end
-            LoadText.Text = "RED HUB Loaded!"
+
+            LoadText.Text = "Loaded Successfully!"
+
         end)
 
-        -- RAINBOW BORDER
         spawn(function()
             local hue = 0
             while true do
@@ -165,9 +183,9 @@ Confirm.MouseButton1Click:Connect(function()
     else
         Status.Text = "Wrong key!"
     end
+
 end)
 
--- PASSWORD RAINBOW BORDER
 spawn(function()
     local hue = 0
     while true do
