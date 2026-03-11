@@ -1,3 +1,4 @@
+-- PASSWORD GUI
 local ScreenGui = Instance.new("ScreenGui")
 local Outer = Instance.new("Frame")
 local Inner = Instance.new("Frame")
@@ -57,7 +58,7 @@ end
 
 local function getKey()
     local key = ""
-    for i,v in pairs(boxes) do
+    for i,v in ipairs(boxes) do
         key = key..v.Text
     end
     return key
@@ -102,7 +103,55 @@ Confirm.MouseButton1Click:Connect(function()
         Inside.BackgroundColor3 = Color3.fromRGB(255,255,255)
         Inside.BorderSizePixel = 0
 
-        -- viền ngoài 7 màu
+        -- TEXT
+        local LoadText = Instance.new("TextLabel")
+        LoadText.Parent = Inside
+        LoadText.Size = UDim2.new(1,0,0.4,0)
+        LoadText.Position = UDim2.new(0,0,0.2,0)
+        LoadText.BackgroundTransparency = 1
+        LoadText.TextScaled = true
+        LoadText.TextColor3 = Color3.new(0,0,0)
+        LoadText.Text = "Initializing..."
+
+        -- LOADING BAR
+        local BarBG = Instance.new("Frame")
+        BarBG.Parent = Inside
+        BarBG.Size = UDim2.new(0.8,0,0,20)
+        BarBG.Position = UDim2.new(0.1,0,0.75,0)
+        BarBG.BackgroundColor3 = Color3.fromRGB(200,200,200)
+        BarBG.BorderSizePixel = 0
+
+        local Bar = Instance.new("Frame")
+        Bar.Parent = BarBG
+        Bar.Size = UDim2.new(0,0,1,0)
+        Bar.BackgroundColor3 = Color3.fromRGB(255,0,0)
+        Bar.BorderSizePixel = 0
+
+        local messages = {
+        "Initializing system...",
+        "Loading assets...",
+        "Checking scripts...",
+        "Connecting modules...",
+        "Preparing interface...",
+        "Loading UI elements...",
+        "Checking security...",
+        "Syncing data...",
+        "Loading functions...",
+        "Preparing features...",
+        "Finalizing setup...",
+        "Starting RED HUB..."
+        }
+
+        spawn(function()
+            for i = 1,100 do
+                Bar.Size = UDim2.new(i/100,0,1,0)
+                LoadText.Text = messages[math.random(1,#messages)]
+                wait(0.08)
+            end
+            LoadText.Text = "RED HUB Loaded!"
+        end)
+
+        -- RAINBOW BORDER
         spawn(function()
             local hue = 0
             while true do
@@ -118,14 +167,12 @@ Confirm.MouseButton1Click:Connect(function()
     end
 end)
 
--- rainbow border
+-- PASSWORD RAINBOW BORDER
 spawn(function()
     local hue = 0
     while true do
         hue = hue + 0.01
-        if hue > 1 then
-            hue = 0
-        end
+        if hue > 1 then hue = 0 end
         Outer.BackgroundColor3 = Color3.fromHSV(hue,1,1)
         wait(0.05)
     end
