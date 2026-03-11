@@ -1,28 +1,16 @@
 ------------------------------------------------
--- RED HUB FULL SYSTEM
-------------------------------------------------
-
-local adminPassword = "67890"
-
--- Xóa GUI cũ nếu exec lại
-if game.CoreGui:FindFirstChild("REDHUB") then
-    game.CoreGui.REDHUB:Destroy()
-end
-
-------------------------------------------------
--- KEY GUI
+-- RED HUB SYSTEM
 ------------------------------------------------
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "REDHUB"
-ScreenGui.Parent = game.CoreGui
-
 local Outer = Instance.new("Frame")
 local Inner = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local Status = Instance.new("TextLabel")
 local GetKey = Instance.new("TextButton")
 local Confirm = Instance.new("TextButton")
+
+ScreenGui.Parent = game.CoreGui
 
 Outer.Parent = ScreenGui
 Outer.Size = UDim2.new(0,420,0,250)
@@ -58,10 +46,6 @@ Confirm.Text = "✅ Confirm"
 Confirm.Size = UDim2.new(0,120,0,40)
 Confirm.Position = UDim2.new(0.6,0,0.35,0)
 
-------------------------------------------------
--- KEY BOX
-------------------------------------------------
-
 local boxes = {}
 
 for i = 1,5 do
@@ -77,27 +61,16 @@ end
 
 local function getKey()
     local key = ""
-    for _,v in pairs(boxes) do
+    for i,v in pairs(boxes) do
         key = key..v.Text
     end
     return key
 end
 
-------------------------------------------------
--- GET KEY (DÁN LINK KÊNH CỦA BẠN Ở ĐÂY)
-------------------------------------------------
-
 GetKey.MouseButton1Click:Connect(function()
-
-    setclipboard("PASTE_YOUR_YOUTUBE_CHANNEL_LINK_HERE")
-
-    Status.Text = "📋 Channel link copied!"
-
+    setclipboard("https://www.youtube.com/")
+    Status.Text = "📋 Link copied!"
 end)
-
-------------------------------------------------
--- CONFIRM KEY
-------------------------------------------------
 
 Confirm.MouseButton1Click:Connect(function()
 
@@ -110,179 +83,171 @@ Confirm.MouseButton1Click:Connect(function()
 
         ScreenGui:Destroy()
 
-------------------------------------------------
--- LOADING
-------------------------------------------------
+        ---------------- LOADING ----------------
 
         local LoadGui = Instance.new("ScreenGui")
+        local Border1 = Instance.new("Frame")
+        local Border2 = Instance.new("Frame")
+        local Inside = Instance.new("Frame")
+        local TitleLoading = Instance.new("TextLabel")
+        local LoadText = Instance.new("TextLabel")
+        local Percent = Instance.new("TextLabel")
+        local BarBack = Instance.new("Frame")
+        local Bar = Instance.new("Frame")
+
         LoadGui.Parent = game.CoreGui
 
-        local Frame = Instance.new("Frame")
-        Frame.Parent = LoadGui
-        Frame.Size = UDim2.new(0,420,0,250)
-        Frame.Position = UDim2.new(0.5,-210,0.5,-125)
+        Border1.Parent = LoadGui
+        Border1.Size = UDim2.new(0,420,0,250)
+        Border1.Position = UDim2.new(0.5,-210,0.5,-125)
 
-        local Percent = Instance.new("TextLabel")
-        Percent.Parent = Frame
-        Percent.Size = UDim2.new(1,0,0,40)
-        Percent.Position = UDim2.new(0,0,0.3,0)
+        Border2.Parent = Border1
+        Border2.Size = UDim2.new(1,-6,1,-6)
+        Border2.Position = UDim2.new(0,3,0,3)
+        Border2.BackgroundColor3 = Color3.fromRGB(0,170,255)
+
+        Inside.Parent = Border2
+        Inside.Size = UDim2.new(1,-6,1,-6)
+        Inside.Position = UDim2.new(0,3,0,3)
+        Inside.BackgroundColor3 = Color3.fromRGB(255,255,255)
+
+        TitleLoading.Parent = Inside
+        TitleLoading.Size = UDim2.new(1,0,0,40)
+        TitleLoading.Position = UDim2.new(0,0,0.05,0)
+        TitleLoading.BackgroundTransparency = 1
+        TitleLoading.TextScaled = true
+        TitleLoading.Text = "🔴 RED HUB LOADING"
+
+        LoadText.Parent = Inside
+        LoadText.Size = UDim2.new(1,0,0,40)
+        LoadText.Position = UDim2.new(0,0,0.25,0)
+        LoadText.BackgroundTransparency = 1
+        LoadText.TextScaled = true
+        LoadText.Text = "🔧 Initializing..."
+
+        Percent.Parent = Inside
+        Percent.Size = UDim2.new(1,0,0,30)
+        Percent.Position = UDim2.new(0,0,0.45,0)
+        Percent.BackgroundTransparency = 1
         Percent.TextScaled = true
         Percent.Text = "0%"
 
-        local BarBack = Instance.new("Frame")
-        BarBack.Parent = Frame
+        BarBack.Parent = Inside
         BarBack.Size = UDim2.new(0.8,0,0,20)
         BarBack.Position = UDim2.new(0.1,0,0.6,0)
         BarBack.BackgroundColor3 = Color3.fromRGB(200,200,200)
 
-        local Bar = Instance.new("Frame")
         Bar.Parent = BarBack
         Bar.Size = UDim2.new(0,0,1,0)
         Bar.BackgroundColor3 = Color3.fromRGB(0,170,255)
 
-------------------------------------------------
--- MUSIC (15s)
-------------------------------------------------
-
         local Music = Instance.new("Sound")
-        Music.Parent = Frame
+        Music.Parent = Inside
         Music.SoundId = "rbxassetid://142376088"
         Music.Volume = 2
         Music:Play()
 
-------------------------------------------------
--- LOADING PROCESS (15s)
-------------------------------------------------
+        local messages = {
+        "🔧 Initializing system...",
+        "📦 Loading assets...",
+        "🧠 Checking scripts...",
+        "🖥️ Preparing interface...",
+        "📂 Loading modules...",
+        "⚡ Optimizing performance...",
+        "📡 Syncing data...",
+        "🧩 Preparing features...",
+        "🔥 Finalizing setup...",
+        "🚀 Starting RED HUB..."
+        }
 
-        for i = 0,100 do
+        spawn(function()
 
-            Percent.Text = i.."%"
-            Bar.Size = UDim2.new(i/100,0,1,0)
+            for i = 0,100 do
 
-            wait(0.15)
+                Percent.Text = i.."%"
+                Bar.Size = UDim2.new(i/100,0,1,0)
+                LoadText.Text = messages[math.random(1,#messages)]
 
-        end
+                wait(0.07)
 
-        Music:Stop()
-        LoadGui:Destroy()
-
-------------------------------------------------
--- CAPTCHA
-------------------------------------------------
-
-        local VerifyFrame = Instance.new("Frame")
-        VerifyFrame.Parent = game.CoreGui
-        VerifyFrame.Size = UDim2.new(0,420,0,320)
-        VerifyFrame.Position = UDim2.new(0.5,-210,0.5,-160)
-
-        local correct = {}
-        local buttons = {}
-
-        for i = 1,25 do
-
-            local btn = Instance.new("TextButton")
-            btn.Parent = VerifyFrame
-            btn.Size = UDim2.new(0,50,0,50)
-
-            local row = math.floor((i-1)/5)
-            local col = (i-1)%5
-
-            btn.Position = UDim2.new(0,20+col*60,0,20+row*60)
-
-            if math.random(1,3)==1 then
-                btn.Text = "🍎"
-                correct[btn]=true
-            else
-                btn.Text = "🚗"
             end
 
-            btn.MouseButton1Click:Connect(function()
-                btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
-            end)
+            LoadText.Text = "✅ Loaded Successfully!"
 
-            table.insert(buttons,btn)
+            wait(1)
 
-        end
+            Music:Stop()
+            LoadGui:Destroy()
 
-------------------------------------------------
--- VERIFY BUTTON
-------------------------------------------------
+            ---------------- CAPTCHA ----------------
 
-        local VerifyBtn = Instance.new("TextButton")
-        VerifyBtn.Parent = VerifyFrame
-        VerifyBtn.Size = UDim2.new(0,150,0,40)
-        VerifyBtn.Position = UDim2.new(0.1,0,1,-50)
-        VerifyBtn.Text = "VERIFY"
+            local VerifyFrame = Instance.new("Frame")
+            VerifyFrame.Parent = game.CoreGui
+            VerifyFrame.Size = UDim2.new(0,420,0,320)
+            VerifyFrame.Position = UDim2.new(0.5,-210,0.5,-160)
+            VerifyFrame.BackgroundColor3 = Color3.fromRGB(255,255,255)
 
-------------------------------------------------
--- ADMIN BUTTON
-------------------------------------------------
+            local Title = Instance.new("TextLabel")
+            Title.Parent = VerifyFrame
+            Title.Size = UDim2.new(1,0,0,40)
+            Title.Text = "🤖 Verify You Are Human"
+            Title.TextScaled = true
+            Title.BackgroundTransparency = 1
 
-        local AdminBtn = Instance.new("TextButton")
-        AdminBtn.Parent = VerifyFrame
-        AdminBtn.Size = UDim2.new(0,150,0,40)
-        AdminBtn.Position = UDim2.new(0.55,0,1,-50)
-        AdminBtn.Text = "ADMIN BYPASS"
+            local buttons = {}
+            local correct = {}
 
-        VerifyBtn.MouseButton1Click:Connect(function()
+            for i = 1,25 do
 
-            local correctClicks = 0
+                local btn = Instance.new("TextButton")
+                btn.Parent = VerifyFrame
+                btn.Size = UDim2.new(0,50,0,50)
 
-            for _,btn in pairs(buttons) do
-                if btn.BackgroundColor3 == Color3.fromRGB(0,255,0) and correct[btn] then
-                    correctClicks += 1
+                local row = math.floor((i-1)/5)
+                local col = (i-1)%5
+
+                btn.Position = UDim2.new(0,20+col*60,0,60+row*50)
+
+                if math.random(1,3)==1 then
+                    btn.Text = "🍎"
+                    correct[btn] = true
+                else
+                    btn.Text = "🚗"
                 end
-            end
 
-            if correctClicks >= 3 then
+                btn.MouseButton1Click:Connect(function()
+                    btn.BackgroundColor3 = Color3.fromRGB(0,255,0)
+                end)
 
-                VerifyFrame:Destroy()
-
-                local Menu = Instance.new("TextLabel")
-                Menu.Parent = game.CoreGui
-                Menu.Size = UDim2.new(1,0,1,0)
-                Menu.TextScaled = true
-                Menu.Text = "WELCOME TO RED HUB"
+                table.insert(buttons,btn)
 
             end
 
-        end)
+            local Verify = Instance.new("TextButton")
+            Verify.Parent = VerifyFrame
+            Verify.Size = UDim2.new(0,150,0,40)
+            Verify.Position = UDim2.new(0.35,0,1,-50)
+            Verify.Text = "VERIFY"
 
-------------------------------------------------
--- ADMIN PASSWORD
-------------------------------------------------
+            Verify.MouseButton1Click:Connect(function()
 
-        AdminBtn.MouseButton1Click:Connect(function()
+                local correctClicks = 0
 
-            local AdminFrame = Instance.new("Frame")
-            AdminFrame.Parent = game.CoreGui
-            AdminFrame.Size = UDim2.new(0,300,0,200)
-            AdminFrame.Position = UDim2.new(0.5,-150,0.5,-100)
+                for _,btn in pairs(buttons) do
+                    if btn.BackgroundColor3 == Color3.fromRGB(0,255,0) and correct[btn] then
+                        correctClicks += 1
+                    end
+                end
 
-            local Box = Instance.new("TextBox")
-            Box.Parent = AdminFrame
-            Box.Size = UDim2.new(0,200,0,40)
-            Box.Position = UDim2.new(0.5,-100,0.3,0)
-            Box.PlaceholderText = "Enter Password"
-
-            local ConfirmAdmin = Instance.new("TextButton")
-            ConfirmAdmin.Parent = AdminFrame
-            ConfirmAdmin.Size = UDim2.new(0,100,0,40)
-            ConfirmAdmin.Position = UDim2.new(0.35,0,0.7,0)
-            ConfirmAdmin.Text = "Confirm"
-
-            ConfirmAdmin.MouseButton1Click:Connect(function()
-
-                if Box.Text == adminPassword then
+                if correctClicks >= 3 then
 
                     VerifyFrame:Destroy()
-                    AdminFrame:Destroy()
 
                     local Menu = Instance.new("TextLabel")
                     Menu.Parent = game.CoreGui
                     Menu.Size = UDim2.new(1,0,1,0)
                     Menu.TextScaled = true
-                    Menu.Text = "ADMIN ACCESS - RED HUB"
+                    Menu.Text = "WELCOME TO RED HUB"
 
                 end
 
@@ -291,9 +256,17 @@ Confirm.MouseButton1Click:Connect(function()
         end)
 
     else
-
         Status.Text = "❌ Wrong key!"
-
     end
 
+end)
+
+spawn(function()
+    local hue = 0
+    while true do
+        hue = hue + 0.01
+        if hue > 1 then hue = 0 end
+        Outer.BackgroundColor3 = Color3.fromHSV(hue,1,1)
+        wait(0.05)
+    end
 end)
