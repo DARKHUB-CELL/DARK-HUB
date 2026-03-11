@@ -19,26 +19,26 @@ Inner.Position = UDim2.new(0,5,0,5)
 Inner.BackgroundColor3 = Color3.fromRGB(255,255,255)
 
 Title.Parent = Inner
-Title.Text = "RED HUB"
+Title.Text = "🔴 RED HUB"
 Title.Size = UDim2.new(1,0,0,40)
 Title.TextScaled = true
 Title.BackgroundTransparency = 1
 Title.TextColor3 = Color3.new(0,0,0)
 
 Status.Parent = Inner
-Status.Text = "Waiting for key..."
+Status.Text = "🔑 Waiting for key..."
 Status.Size = UDim2.new(1,0,0,30)
 Status.Position = UDim2.new(0,0,0.2,0)
 Status.BackgroundTransparency = 1
 Status.TextColor3 = Color3.new(0,0,0)
 
 GetKey.Parent = Inner
-GetKey.Text = "Get Key"
+GetKey.Text = "📋 Get Key"
 GetKey.Size = UDim2.new(0,120,0,40)
 GetKey.Position = UDim2.new(0.1,0,0.35,0)
 
 Confirm.Parent = Inner
-Confirm.Text = "Confirm"
+Confirm.Text = "✅ Confirm"
 Confirm.Size = UDim2.new(0,120,0,40)
 Confirm.Position = UDim2.new(0.6,0,0.35,0)
 
@@ -64,8 +64,8 @@ local function getKey()
 end
 
 GetKey.MouseButton1Click:Connect(function()
-    setclipboard("https://www.youtube.com/@LV_Animations-m3s")
-    Status.Text = "Link copied to clipboard!"
+    setclipboard("https://www.youtube.com/")
+    Status.Text = "📋 Link copied!"
 end)
 
 Confirm.MouseButton1Click:Connect(function()
@@ -74,16 +74,18 @@ Confirm.MouseButton1Click:Connect(function()
 
     if key == "60132" or key == "90718" then
 
-        Status.Text = "Access granted!"
+        Status.Text = "✅ Access granted!"
         wait(1)
 
         ScreenGui:Destroy()
 
-        -- LOADING GUI
+        ---------------- LOADING ----------------
+
         local LoadGui = Instance.new("ScreenGui")
         local Border1 = Instance.new("Frame")
         local Border2 = Instance.new("Frame")
         local Inside = Instance.new("Frame")
+        local TitleLoading = Instance.new("TextLabel")
         local LoadText = Instance.new("TextLabel")
         local Percent = Instance.new("TextLabel")
         local BarBack = Instance.new("Frame")
@@ -100,33 +102,36 @@ Confirm.MouseButton1Click:Connect(function()
         Border2.Size = UDim2.new(1,-6,1,-6)
         Border2.Position = UDim2.new(0,3,0,3)
         Border2.BackgroundColor3 = Color3.fromRGB(0,170,255)
-        Border2.BorderSizePixel = 0
 
         Inside.Parent = Border2
         Inside.Size = UDim2.new(1,-6,1,-6)
         Inside.Position = UDim2.new(0,3,0,3)
         Inside.BackgroundColor3 = Color3.fromRGB(255,255,255)
-        Inside.BorderSizePixel = 0
+
+        TitleLoading.Parent = Inside
+        TitleLoading.Size = UDim2.new(1,0,0,40)
+        TitleLoading.Position = UDim2.new(0,0,0.05,0)
+        TitleLoading.BackgroundTransparency = 1
+        TitleLoading.TextScaled = true
+        TitleLoading.Text = "🔴 RED HUB LOADING"
 
         LoadText.Parent = Inside
         LoadText.Size = UDim2.new(1,0,0,40)
-        LoadText.Position = UDim2.new(0,0,0.2,0)
+        LoadText.Position = UDim2.new(0,0,0.25,0)
         LoadText.BackgroundTransparency = 1
         LoadText.TextScaled = true
-        LoadText.TextColor3 = Color3.new(0,0,0)
-        LoadText.Text = "Initializing..."
+        LoadText.Text = "🔧 Initializing..."
 
         Percent.Parent = Inside
         Percent.Size = UDim2.new(1,0,0,30)
-        Percent.Position = UDim2.new(0,0,0.4,0)
+        Percent.Position = UDim2.new(0,0,0.45,0)
         Percent.BackgroundTransparency = 1
         Percent.TextScaled = true
-        Percent.TextColor3 = Color3.new(0,0,0)
         Percent.Text = "0%"
 
         BarBack.Parent = Inside
         BarBack.Size = UDim2.new(0.8,0,0,20)
-        BarBack.Position = UDim2.new(0.1,0,0.55,0)
+        BarBack.Position = UDim2.new(0.1,0,0.6,0)
         BarBack.BackgroundColor3 = Color3.fromRGB(200,200,200)
 
         Bar.Parent = BarBack
@@ -141,16 +146,16 @@ Confirm.MouseButton1Click:Connect(function()
         Music:Play()
 
         local messages = {
-        "Initializing system...",
-        "Loading assets...",
-        "Checking scripts...",
-        "Preparing interface...",
-        "Loading modules...",
-        "Optimizing performance...",
-        "Syncing data...",
-        "Preparing features...",
-        "Finalizing setup...",
-        "Starting RED HUB..."
+        "🔧 Initializing system...",
+        "📦 Loading assets...",
+        "🧠 Checking scripts...",
+        "🖥️ Preparing interface...",
+        "📂 Loading modules...",
+        "⚡ Optimizing performance...",
+        "📡 Syncing data...",
+        "🧩 Preparing features...",
+        "🔥 Finalizing setup...",
+        "🚀 Starting RED HUB..."
         }
 
         spawn(function()
@@ -162,11 +167,28 @@ Confirm.MouseButton1Click:Connect(function()
 
                 LoadText.Text = messages[math.random(1,#messages)]
 
-                wait(0.9) -- ~90 giây
+                wait(0.9)
 
             end
 
-            LoadText.Text = "Loaded Successfully!"
+            LoadText.Text = "✅ Loaded Successfully!"
+
+            wait(2)
+
+            for i = 1,20 do
+                Inside.BackgroundTransparency = Inside.BackgroundTransparency + 0.05
+                Border1.BackgroundTransparency = Border1.BackgroundTransparency + 0.05
+                Border2.BackgroundTransparency = Border2.BackgroundTransparency + 0.05
+                LoadText.TextTransparency = LoadText.TextTransparency + 0.05
+                Percent.TextTransparency = Percent.TextTransparency + 0.05
+                TitleLoading.TextTransparency = TitleLoading.TextTransparency + 0.05
+                Bar.BackgroundTransparency = Bar.BackgroundTransparency + 0.05
+                BarBack.BackgroundTransparency = BarBack.BackgroundTransparency + 0.05
+                wait(0.05)
+            end
+
+            Music:Stop()
+            LoadGui:Destroy()
 
         end)
 
@@ -181,7 +203,7 @@ Confirm.MouseButton1Click:Connect(function()
         end)
 
     else
-        Status.Text = "Wrong key!"
+        Status.Text = "❌ Wrong key!"
     end
 
 end)
